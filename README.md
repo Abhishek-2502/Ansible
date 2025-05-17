@@ -8,7 +8,7 @@
 * [Installing Ansible on the Master Server](#installing-ansible-on-the-master-server)
 * [Configuring the Inventory File](#configuring-the-inventory-file)
 * [Transferring the PEM Key](#transferring-the-pem-key)
-* [Verifying Connectivity](#verifying-connectivity)
+* [Verifying Connectivity and run commands](#verifying-connectivity-and-run-commands)
 * [Running Ansible Playbooks](#running-ansible-playbooks)
 * [Example Playbooks](#example-playbooks)
 * [Conclusion](#conclusion)
@@ -84,7 +84,7 @@ Note: Instead of [all:vars], you can specify any grp like [devservers:vars] or [
 
 ## Transferring the PEM Key
 
-Create a directory on the master server to store the PEM key:
+1. Create a directory on the master server to store the PEM key:
 
 ```bash
 mkdir keys
@@ -92,17 +92,17 @@ cd keys
 pwd
 ```
 
-Copy ssh command of instance for future use. (Ex. ssh -i "pem_key_name.pem" ubuntu@ec2-54-152-198-35.compute-1.amazonaws.com)
+2. Copy ssh command of instance for future use. (Ex. ssh -i "pem_key_name.pem" ubuntu@ec2-54-152-198-35.compute-1.amazonaws.com)
 
-Give required permission to pem file in local system.
+3. Give required permission to pem file in local system.
 
-Copy the PEM file from your local machine to the master server by opening cmd where PEM file is downloaded:
+4. Copy the PEM file from your local machine to the master server by opening cmd where PEM file is downloaded:
 
 ```bash
 scp -i "pem_key_name.pem" pem_key_name.pem ubuntu@ec2-54-152-198-35.compute-1.amazonaws.com:/home/ubuntu/keys
 ```
 
-## Verifying Connectivity and run some commands
+## Verifying Connectivity and run commands
 
 ```bash
 ansible devservers -m ping
@@ -207,8 +207,8 @@ vim date_play.yml
 
 ## Ansible VS Chef
 
-Ansible (Push Based)- 1 server (master) have Ansible installed, it pushes updates on all other servers.
-Chef (Pull Based)- Bring Configuration from all servers and than updates them.
+- Ansible (Push Based)- 1 server (master) have Ansible installed, it pushes updates on all other servers.
+- Chef (Pull Based)- Bring Configuration from all servers and than updates them.
 
 
 ## Conclusion
