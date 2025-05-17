@@ -92,14 +92,20 @@ cd keys
 pwd
 ```
 
-2. Copy ssh command of instance for future use. (Ex. ssh -i "pem_key_name.pem" ubuntu@ec2-54-152-198-35.compute-1.amazonaws.com)
+2. Copy ssh command of master instance for future use. (Ex. ssh -i "pem_key_name.pem" ubuntu@ec2-54-152-198-35.compute-1.amazonaws.com)
 
 3. Give required permission to pem file in local system.
 
-4. Copy the PEM file from your local machine to the master server by opening cmd where PEM file is downloaded:
+4. Copy the PEM file from your local machine to the master server byrunning following command in cmd where PEM file is downloaded:
 
 ```bash
 scp -i "pem_key_name.pem" pem_key_name.pem ubuntu@ec2-54-152-198-35.compute-1.amazonaws.com:/home/ubuntu/keys
+```
+
+5. Give permission to newly copied pem_key_name.pem inside master server:
+
+```bash
+chmod 400 pem_key_name.pem
 ```
 
 ## Verifying Connectivity and run commands
