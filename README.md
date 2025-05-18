@@ -12,6 +12,7 @@
 * [Running Ansible Playbooks](#running-ansible-playbooks)
 * [Example Playbooks](#example-playbooks)
 * [Conclusion](#conclusion)
+* [Author](#author)
 
 ## Introduction to Ansible 
 
@@ -144,7 +145,8 @@ vim date_play.yml
 ### Date Playbook (date_play.yml)
 
 ```yaml
-- name: Date Playbook
+-
+  name: Date Playbook
   hosts: devservers
   tasks:
     - name: Show the current date
@@ -156,7 +158,8 @@ vim date_play.yml
 ### Install Nginx Playbook (install_nginx_play.yml)
 
 ```yaml
-- name: Install Nginx and Start Service
+-
+  name: Install Nginx and Start Service
   hosts: devservers
   become: yes
   tasks:
@@ -174,7 +177,8 @@ vim date_play.yml
 ### Conditional Statements (conditional_statement_play.yml)
 
 ```yaml
-- name: Install Packages Based on OS
+-
+  name: Install Packages Based on OS
   hosts: devservers
   become: yes
   tasks:
@@ -192,7 +196,8 @@ vim date_play.yml
 ### Deploy Static Webpage (deploy_static_page_play.yml)
 
 ```yaml
-- name: Deploy Static Webpage
+-
+  name: Deploy Static Webpage
   hosts: prdservers
   become: yes
   tasks:
@@ -216,7 +221,10 @@ vim date_play.yml
 - Ansible (Push Based)- 1 server (master) have Ansible installed, it pushes updates on all other servers.
 - Chef (Pull Based)- Bring Configuration from all servers and than updates them.
 
-
 ## Conclusion
 
 This guide covers the basics of Ansible setup, from installing the tool to running playbooks. For more advanced use cases, consider exploring roles, Ansible Galaxy, and dynamic inventories.
+
+## Author 
+
+Abhishek Rajput
