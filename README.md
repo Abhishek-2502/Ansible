@@ -11,6 +11,7 @@
 * [Verifying Connectivity and run commands](#verifying-connectivity-and-run-commands)
 * [Playbooks](#playbooks)
 * [Running Ansible Playbooks](#running-ansible-playbooks)
+* [Ansible VS Chef](#ansible-vs-chef)
 * [Conclusion](#conclusion)
 * [Author](#author)
 
