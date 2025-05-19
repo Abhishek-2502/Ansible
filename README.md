@@ -11,6 +11,8 @@
 * [Verifying Connectivity and run commands](#verifying-connectivity-and-run-commands)
 * [Running Ansible Playbooks](#running-ansible-playbooks)
 * [Example Playbooks](#example-playbooks)
+* [Ansible Variables](#ansible-variables)
+* [Ansible Facts](#ansible-facts)
 * [Conclusion](#conclusion)
 * [Author](#author)
 
@@ -234,6 +236,27 @@ Ansible variables allow you to simplify your playbooks, improve readability, and
     - name: Show the system uptime
       command: "{{ uptime_command }}"
 ```
+
+## Ansible Facts
+Ansible facts are automatically collected information about your managed nodes, including system architecture, network interfaces, disk space, and more. They provide real-time data that can be used in your playbooks to make context-aware automation decisions.
+
+### Date Playbook (date_play.yml)
+
+```yaml
+---
+- name: Date and Uptime Playbook
+  hosts: devservers
+  gather_facts: yes
+  tasks:
+    - name: Show the current date
+      debug:
+        msg: "Current Date: {{ ansible_date_time.date }}"
+
+    - name: Show the system uptime
+      debug:
+        msg: "System Uptime: {{ ansible_uptime_seconds }} seconds"
+```
+
 ## Ansible VS Chef
 
 - Ansible (Push Based)- 1 server (master) have Ansible installed, it pushes updates on all other servers.
