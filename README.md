@@ -215,7 +215,25 @@ vim date_play.yml
         src: index.html
         dest: /var/www/html
 ```
+## Ansible Variables
+Ansible variables allow you to simplify your playbooks, improve readability, and make your automation scripts more flexible. They enable you to define reusable parameters, reducing duplication and centralizing configuration management.
 
+### Date Playbook (date_play.yml)
+
+```yaml
+---
+- name: Date Playbook
+  hosts: devservers
+  vars:
+    date_command: date
+    uptime_command: uptime
+  tasks:
+    - name: Show the current date
+      command: "{{ date_command }}"
+
+    - name: Show the system uptime
+      command: "{{ uptime_command }}"
+```
 ## Ansible VS Chef
 
 - Ansible (Push Based)- 1 server (master) have Ansible installed, it pushes updates on all other servers.
