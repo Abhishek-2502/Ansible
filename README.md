@@ -147,7 +147,7 @@ vim date_play.yml
 ```yaml
 -
   name: Install Nginx and Start Service
-  hosts: devservers
+  hosts: prdservers
   become: yes
   tasks:
     - name: Install nginx
@@ -160,32 +160,12 @@ vim date_play.yml
         state: started
         enabled: yes
 ```
-
-### Conditional Statements (conditional_statement_play.yml)
-
-```yaml
--
-  name: Install Packages Based on OS
-  hosts: devservers
-  become: yes
-  tasks:
-    - name: Install Docker
-      apt:
-        name: docker.io
-        state: latest
-    - name: Install AWS CLI
-      apt:
-        name: awscli
-        state: latest
-      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
-```
-
 ### Deploy Static Webpage (deploy_static_page_play.yml)
 
 ```yaml
 -
   name: Deploy Static Webpage
-  hosts: prdservers
+  hosts: all
   become: yes
   tasks:
     - name: Install nginx
@@ -257,6 +237,63 @@ Ansible facts are automatically collected information about your managed nodes, 
       debug:
         msg: "System Uptime: {{ ansible_uptime_seconds }} seconds"
 ```
+
+## **Ansible Constructs**
+
+Ansible provides a range of constructs to enhance the flexibility and power of your playbooks. These include **Conditionals**, **Handlers**, and **Loops**, which allow you to control the flow of tasks and respond to changes in your infrastructure.
+
+### **1. Conditionals**
+
+Conditionals allow you to run tasks based on the state of a variable, output of a command, or facts collected from the managed nodes.
+
+**Example:**
+
+```yaml
+- name: Install Apache if not already installed
+  apt:
+    name: apache2
+    state: present
+  when: ansible_os_family == "Debian"
+```
+
+### **2. Handlers**
+
+Handlers are special tasks that are triggered when a related task reports a change, ensuring efficient resource usage.
+
+**Example:**
+
+```yaml
+- name: Copy the Apache configuration file
+  copy:
+    src: apache.conf
+    dest: /etc/apache2/apache2.conf
+  notify: Restart Apache
+
+handlers:
+  - name: Restart Apache
+    service:
+      name: apache2
+      state: restarted
+```
+
+### **3. Loops**
+
+Loops enable you to repeat a task for multiple items, reducing redundancy and simplifying your playbooks.
+
+**Example:**
+
+```yaml
+- name: Install multiple packages
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - git
+    - curl
+    - nginx
+```
+
+Using these constructs effectively can make your playbooks more efficient, reusable, and easier to maintain.
 
 ## Ansible VS Chef
 Ansible and Chef are popular configuration management tools, each with its own approach to automating IT infrastructure. Understanding their differences can help you choose the right tool for your environment.
