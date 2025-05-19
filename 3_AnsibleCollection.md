@@ -10,7 +10,7 @@ Collections make it easier to:
 
 ---
 
-# Ansible Galaxy?
+# Ansible Galaxy
 
 **Ansible Galaxy** is the **community-driven platform** for finding, sharing, and downloading Ansible Collections and Roles. It's hosted at [galaxy.ansible.com](https://galaxy.ansible.com).
 
@@ -28,7 +28,7 @@ ansible-galaxy collection install community.general
 
 ---
 
-# Automation Hub?
+# Automation Hub
 
 **Red Hat Automation Hub** is the **enterprise-grade alternative to Galaxy**, available with **Red Hat Ansible Automation Platform (AAP)**. It provides:
 
