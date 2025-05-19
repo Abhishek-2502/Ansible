@@ -13,6 +13,8 @@
 * [Running Ansible Playbooks](#running-ansible-playbooks)
 * [Ansible Variables](#ansible-variables)
 * [Ansible Facts](#ansible-facts)
+* [Ansible Constructs](#ansible-constructs)
+* [Ansible Templates](#ansible-templates)
 * [Conclusion](#conclusion)
 * [Author](#author)
 
@@ -41,8 +43,6 @@ Ansible is an open-source, Python-based automation tool used for configuration m
      - ansible all -m ping -u ubuntu
 
 8. **ansible.cfg** - Main configuration file for Ansible settings.
-9. **Ansible Facts** - Information about a managed node that is automatically discovered by Ansible during the execution of playbooks or tasks.
-
 
 ## Infrastructure Setup
 
@@ -198,6 +198,8 @@ ansible-playbook -v playbook_name.yml
 ansible-playbook -v playbook_name.yml --limit devservers
 ```
 
+---
+
 ## Ansible Variables
 Ansible variables allow you to simplify your playbooks, improve readability, and make your automation scripts more flexible. They enable you to define reusable parameters, reducing duplication and centralizing configuration management.
 
@@ -218,6 +220,8 @@ Ansible variables allow you to simplify your playbooks, improve readability, and
       command: "{{ uptime_command }}"
 ```
 
+---
+
 ## Ansible Facts
 Ansible facts are automatically collected information about your managed nodes, including system architecture, network interfaces, disk space, and more. They provide real-time data that can be used in your playbooks to make context-aware automation decisions.
 
@@ -237,6 +241,8 @@ Ansible facts are automatically collected information about your managed nodes, 
       debug:
         msg: "System Uptime: {{ ansible_uptime_seconds }} seconds"
 ```
+
+---
 
 ## **Ansible Constructs**
 
@@ -294,6 +300,111 @@ Loops enable you to repeat a task for multiple items, reducing redundancy and si
 ```
 
 Using these constructs effectively can make your playbooks more efficient, reusable, and easier to maintain.
+
+---
+
+## **Ansible Templates**
+
+Ansible templates provide a flexible way to dynamically generate configuration files using the **Jinja2** templating engine. This approach simplifies the management of complex files, ensuring consistency and reusability.
+
+### **Why Use Templates?**
+
+* **Dynamic Configuration:** Generate files based on variables, facts, and logic.
+* **Reusability:** Create a single template for multiple hosts or environments.
+* **Consistency:** Ensure uniform formatting and structure.
+
+### **Directory Structure:**
+
+```
+.
+├── templates/
+│   ├── welcome_message.j2
+│   └── nginx.conf.j2
+└── site.yml
+```
+
+---
+
+### **Welcome Message Example:**
+
+#### **Template File (`templates/welcome_message.j2`):**
+
+```jinja
+######################################
+Welcome to {{ ansible_hostname }}!
+Managed by Ansible.
+######################################
+```
+
+#### **Playbook File (`site.yml`):**
+
+```yaml
+---
+- name: Configure Welcome Message and Nginx
+  hosts: all
+  vars:
+    welcome_file: /etc/motd
+    server_name: example.com
+    backend_server: app-server
+    backend_port: 8080
+  tasks:
+    - name: Deploy Welcome Message
+      template:
+        src: templates/welcome_message.j2
+        dest: "{{ welcome_file }}"
+      notify: Display Welcome Message
+
+    - name: Deploy Nginx Configuration
+      template:
+        src: templates/nginx.conf.j2
+        dest: /etc/nginx/nginx.conf
+      notify: Restart Nginx
+
+handlers:
+  - name: Display Welcome Message
+    command:
+      cmd: cat "{{ welcome_file }}"
+
+  - name: Restart Nginx
+    service:
+      name: nginx
+      state: restarted
+```
+
+### **Nginx Configuration Example:**
+
+#### **Template File (`templates/nginx.conf.j2`):**
+
+```jinja
+server {
+    listen 80;
+    server_name {{ server_name }};
+    location / {
+        proxy_pass http://{{ backend_server }}:{{ backend_port }};
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+}
+```
+
+---
+
+### **Expected Outputs:**
+
+**Welcome Message:**
+After running the playbook, logging into a node should display a message like:
+
+```
+######################################
+Welcome to server01!
+Managed by Ansible.
+######################################
+```
+
+**Nginx Configuration:**
+Your Nginx server will be configured to proxy requests to a backend server, as specified in the playbook variables.
+
+---
 
 ## Ansible VS Chef
 Ansible and Chef are popular configuration management tools, each with its own approach to automating IT infrastructure. Understanding their differences can help you choose the right tool for your environment.
