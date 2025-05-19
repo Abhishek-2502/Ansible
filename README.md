@@ -258,9 +258,21 @@ Ansible facts are automatically collected information about your managed nodes, 
 ```
 
 ## Ansible VS Chef
+Ansible and Chef are popular configuration management tools, each with its own approach to automating IT infrastructure. Understanding their differences can help you choose the right tool for your environment.
 
-- Ansible (Push Based)- 1 server (master) have Ansible installed, it pushes updates on all other servers.
-- Chef (Pull Based)- Bring Configuration from all servers and than updates them.
+### **Key Differences:**
+
+| **Aspect**              | **Ansible (Push-Based)**                                                                  | **Chef (Pull-Based)**                                                                |
+| ----------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| **Architecture**        | Single server (master) with Ansible installed pushes configurations to all managed nodes. | Managed nodes (clients) pull configurations from a central Chef server.              |
+| **Communication**       | Uses agentless SSH for communication, reducing overhead and simplifying setup.            | Requires Chef clients on each node, which periodically pull updates from the server. |
+| **Ease of Use**         | Simple YAML-based playbooks make it easy to get started.                                  | More complex, using Ruby-based recipes and cookbooks.                                |
+| **Configuration Model** | Declarative, focusing on defining the desired state of the infrastructure.                | Primarily declarative, but supports procedural logic through Ruby.                   |
+| **Scalability**         | Ideal for small to medium-sized infrastructures.                                          | Designed for large-scale, complex environments.                                      |
+| **Setup Time**          | Faster initial setup due to its agentless design.                                         | Slower setup, requiring client installation and configuration.                       |
+
+* Use **Ansible** if you prefer a simpler, agentless approach with faster setup.
+* Use **Chef** for larger infrastructures where complex workflows and scalability are critical.
 
 ## Conclusion
 
