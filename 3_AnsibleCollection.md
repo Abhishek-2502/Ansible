@@ -156,5 +156,5 @@ ansible-galaxy collection publish webops-apache-*.tar.gz
 
 ## Author
 
-**Abhishek Rajput**
+Abhishek Rajput
 
