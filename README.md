@@ -18,6 +18,8 @@
 * [Conclusion](#conclusion)
 * [Author](#author)
 
+---
+
 ## Introduction to Ansible 
 
 Ansible is an open-source, Python-based automation tool used for configuration management, application deployment, and orchestration. It is known for its simplicity and agentless architecture, using SSH for secure communication with target systems. Key features include:
@@ -32,7 +34,7 @@ Ansible is an open-source, Python-based automation tool used for configuration m
 2. **Playbooks** - YAML files that define a set of tasks and configurations to be executed on target hosts.
 3. **Tasks** - Individual units of work within playbooks. They represent actions to be performed on target hosts.
 4. **Modules** - Predefined actions like package installation, file manipulation, etc. Ansible provides a wide range of modules for various tasks, such as package installation, file manipulation, service management, etc.
-5. **Roles** - Reusable playbooks with organized structure. They encapsulate related tasks, handlers, variables, and files into a directory structure.
+5. **Roles** - Reusable playbooks with organized structure. They encapsulate related Tasks, Variables, Files, Templates and Handlers into a directory structure.
 6. **Ad-Hoc Commands vs Modules** - Quick commands (`-a`) vs structured modules (`-m`)
    - ad hoc commands are great for tasks you repeat rarely
    - -a is used for adhoc commands:
@@ -43,6 +45,8 @@ Ansible is an open-source, Python-based automation tool used for configuration m
      - ansible all -m ping -u ubuntu
 
 8. **ansible.cfg** - Main configuration file for Ansible settings.
+
+---
 
 ## Infrastructure Setup
 
@@ -122,6 +126,8 @@ ansible devservers -a "free -h"
 ansible all -a "sudo apt update"
 ansible prdservers -a "sudo uptime"
 ```
+
+---
 
 ## Playbooks
 ```bash
@@ -425,7 +431,7 @@ Ansible and Chef are popular configuration management tools, each with its own a
 
 ## Conclusion
 
-This guide covers the basics of Ansible setup, from installing the tool to running playbooks. For more advanced use cases, consider exploring roles, Ansible Galaxy, and dynamic inventories.
+This guide covers the basics of Ansible setup, from installing the tool to running playbooks.
 
 ## Author 
 
