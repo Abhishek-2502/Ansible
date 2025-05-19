@@ -9,8 +9,8 @@
 * [Configuring the Inventory File](#configuring-the-inventory-file)
 * [Transferring the PEM Key](#transferring-the-pem-key)
 * [Verifying Connectivity and run commands](#verifying-connectivity-and-run-commands)
+* [Playbooks](#playbooks)
 * [Running Ansible Playbooks](#running-ansible-playbooks)
-* [Example Playbooks](#example-playbooks)
 * [Ansible Variables](#ansible-variables)
 * [Ansible Facts](#ansible-facts)
 * [Conclusion](#conclusion)
@@ -123,22 +123,7 @@ ansible all -a "sudo apt update"
 ansible prdservers -a "sudo uptime"
 ```
 
-## Running Ansible Playbooks
-
-To list the inventory:
-
-```bash
-ansible-inventory --list
-```
-
-To run a playbook:
-
-```bash
-ansible-playbook -v playbook_name.yml
-ansible-playbook -v playbook_name.yml --limit devservers
-```
-
-## Example Playbooks
+## Playbooks
 ```bash
 mkdir playbooks
 cd playbooks
@@ -217,6 +202,22 @@ vim date_play.yml
         src: index.html
         dest: /var/www/html
 ```
+
+## Running Ansible Playbooks
+
+To list the inventory:
+
+```bash
+ansible-inventory --list
+```
+
+To run a playbook:
+
+```bash
+ansible-playbook -v playbook_name.yml
+ansible-playbook -v playbook_name.yml --limit devservers
+```
+
 ## Ansible Variables
 Ansible variables allow you to simplify your playbooks, improve readability, and make your automation scripts more flexible. They enable you to define reusable parameters, reducing duplication and centralizing configuration management.
 
