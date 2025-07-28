@@ -47,7 +47,7 @@ Ansible is an open-source, Python-based automation tool used for configuration m
 
 ## Infrastructure Setup
 
-1. **Create EC2 Instances**
+1. **Create Instances**
 
    * Create an `ansible-master` instance with a PEM key.
    * Create 3 instances named `server-1`, `server-2`, and `server-3` using the same PEM key.
@@ -100,7 +100,7 @@ pwd
 
 3. Give required permission to pem file in local system.
 
-4. Copy the PEM file from your local machine to the master server byrunning following command in cmd where PEM file is downloaded:
+4. Copy the PEM file from your local machine to the master server by running following command in cmd where PEM file is downloaded:
 
 ```bash
 scp -i "pem_key_name.pem" pem_key_name.pem ubuntu@ec2-54-152-198-35.compute-1.amazonaws.com:/home/ubuntu/keys
