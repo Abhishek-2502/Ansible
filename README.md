@@ -6,8 +6,9 @@
 * [Key Concepts](#key-concepts)
 * [Infrastructure Setup](#infrastructure-setup)
 * [Installing Ansible on the Master Server](#installing-ansible-on-the-master-server)
+* [Transferring the Key so that master can access host on AWS](#transferring-the-key-so-that-master-can-access-host-on-aws)
+* [Transferring the Key so that master can access host on GCP](#transferring-the-key-so-that-master-can-access-host-on-gcp)
 * [Configuring the Inventory File](#configuring-the-inventory-file)
-* [Transferring the PEM Key](#transferring-the-pem-key)
 * [Verifying Connectivity and run commands](#verifying-connectivity-and-run-commands)
 * [Playbooks](#playbooks)
 * [Running Ansible Playbooks](#running-ansible-playbooks)
@@ -61,32 +62,7 @@ sudo apt install ansible
 ansible --version
 ```
 
-## Configuring the Inventory File
-
-Edit the Ansible hosts file to include your server IPs:
-
-```bash
-sudo vim /etc/ansible/hosts
-```
-
-Add the following:
-
-```ini
-[devservers]
-server_1 ansible_host=<Public_IP_1>
-server_2 ansible_host=<Public_IP_2>
-
-[prdservers]
-server_3 ansible_host=<Public_IP_3>
-
-[all:vars]
-ansible_python_interpreter=/usr/bin/python3
-ansible_user=ubuntu
-ansible_ssh_private_key_file=/home/ubuntu/keys/pem_key_name.pem
-```
-Note: Instead of [all:vars], you can specify any grp like [devservers:vars] or [prdservers:vars].
-
-## Transferring the PEM Key
+## Transferring the Key so that master can access host on AWS
 
 1. Create a directory on the master server to store the PEM key:
 
@@ -111,6 +87,59 @@ scp -i "pem_key_name.pem" pem_key_name.pem ubuntu@ec2-54-152-198-35.compute-1.am
 ```bash
 chmod 400 pem_key_name.pem
 ```
+
+## Transferring the Key so that master can access host on GCP
+
+1. Generate key pair on your master VM:
+
+```bash
+ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa
+```
+
+2. Copy the public key for future use:
+
+```bash
+cat ~/.ssh/id_rsa.pub
+```
+
+3. Copy the public key to each VM and set permissions:
+
+```bash
+mkdir -p ~/.ssh
+echo "<YOUR_PUBLIC_KEY_CONTENT_FROM_ABOVE_STEP>" >> ~/.ssh/authorized_keys
+chmod 600 ~/.ssh/authorized_keys
+```
+
+4. Testing from master instance for each VM:
+```bash
+ssh -i ~/.ssh/id_rsa username@<HOST_PUBLIC_IP>
+```
+ex: ssh -i ~/.ssh/id_rsa abhishek25022004@35.193.55.228
+
+## Configuring the Inventory File
+
+Edit the Ansible hosts file to include your server IPs:
+
+```bash
+sudo vim /etc/ansible/hosts
+```
+
+Add the following:
+
+```ini
+[devservers]
+server_1 ansible_host=<Public_IP_1>
+server_2 ansible_host=<Public_IP_2>
+
+[prdservers]
+server_3 ansible_host=<Public_IP_3>
+
+[all:vars]
+ansible_python_interpreter=/usr/bin/python3
+ansible_user=ubuntu
+ansible_ssh_private_key_file=/home/ubuntu/keys/pem_key_name.pem
+```
+Note: Instead of [all:vars], you can specify any grp like [devservers:vars] or [prdservers:vars].
 
 ## Verifying Connectivity and run commands
 
